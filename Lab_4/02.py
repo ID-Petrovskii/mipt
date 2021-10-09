@@ -12,46 +12,80 @@ PINK = (230, 50, 230)
 
 
 def draw_bird(screen, color, x, y, size):
-    arc(screen, color, (x, y, size, size * 0.5), math.pi * 0.5, math.pi)
-    arc(screen, color, (x - size, y, size, size * 0.5), 0, math.pi * 0.5)
-
+    '''
+    Функция рисует птичку типа "галочка", ну знаешь, как на детском рисунке
+    screen - передаеться поверхость, на которой рисуешь
+    color - цвет птички
+    x, y - координаты правого верхнего угла птички на поверхности
+    size - размер птички по горизонтали (по вертикали будет в 2 раза меньше) в px
+    '''
+    Surface_for_bird = pygame.Surface((2 * size, size * 0.5))
+    Surface_for_bird.set_colorkey((0, 0, 0))
+    arc(Surface_for_bird, color, (size, 0, size, size * 0.5), math.pi * 0.5, math.pi)
+    arc(Surface_for_bird, color, (0, 0, size, size * 0.5), 0, math.pi * 0.5)
+    screen.blit(Surface_for_bird, (x - size*0.5, y))
+    
+    
 
 def draw_fish(screen, color, x, y, size):
-    polygon(screen, PINK,
-            ((x + size * 0.25, y + size * 0.3), (x + size * 0.1, y + size * 0.5), (x + size * 0.3, y + size * 0.5)))
-    polygon(screen, PINK,
-            ((x + size * 0.7, y + size * 0.3), (x + size * 0.7, y + size * 0.6), (x + size * 0.9, y + size * 0.5)))
-    polygon(screen, PINK,
-            ((x + size * 0.6, y + size * 0.1), (x + size * 0.7, y - size * 0.1), (x + size * 0.2, y - size * 0.2)))
-    ellipse(screen, color, (x, y, size, size * 0.4))
-    circle(screen, BLUE, (x + size * 0.8, y + size * 0.2), size * 0.05)
-    polygon(screen, color, ((x, y + size * 0.2), (x - size * 0.2, y), (x - size * 0.2, y + size * 0.4)))
-
+    '''
+    Функция рисует рыбу, тут все понятно
+    screen - передаеться поверхость, на которой рисуешь
+    color - основной цвет рыбы
+    x, y - координаты правого верхнего примерно угла рыбы на поверхности
+    size - некий характерный размер рыбы в px
+    '''
+    Surface_for_fish = pygame.Surface((2 * size, size))
+    Surface_for_fish.set_colorkey((0, 0, 0))
+    polygon(Surface_for_fish, PINK,
+            ((size * 0.45, size * 0.5), (size * 0.3, size * 0.7), (size * 0.5, size * 0.7)))
+    polygon(Surface_for_fish, PINK,
+            ((size * 0.9, size * 0.5), (size * 0.9, size * 0.8), (size * 1.1, size * 0.7)))
+    polygon(Surface_for_fish, PINK,
+            ((size * 0.8, size * 0.3), (size * 0.9, size * 0.1), (size * 0.4, size * 0)))
+    ellipse(Surface_for_fish, color, (size * 0.2, size * 0.2, size, size * 0.4))
+    circle(Surface_for_fish, BLUE, (size * 1, size * 0.4), size * 0.05)
+    polygon(Surface_for_fish, color, ((size * 0.2, size * 0.4), (size * 0, size * 0.2), (size * 0, size * 0.6)))
+    screen.blit(Surface_for_fish, (x - size * 0.2, y - size *0.2))
+    
+    
+    
 
 def draw_gull(screen, color, x, y, size):
-    ellipse(screen, color, (x, y, size, size / 2))
-    ellipse(screen, color, (x + size * 0.8, y + size * 0.1, size / 2, size / 4))
-    ellipse(screen, color, (x + size, y, size / 2, size / 4))
-    ellipse(screen, BLACK, (x + size * 1.3, y + size * 0.04, size / 10, size / 20))
-    line(screen, YELLOW, (x + size * 1.5, y + size * 0.12), (x + size * 1.8, y + size * 0.12), int(size * 0.06))
-    line(screen, BLACK, (x + size * 1.5, y + size * 0.12), (x + size * 1.8, y + size * 0.12), int(size * 0.01))
-    polygon(screen, color,
-            ((x + size * 0.25, y + size * 0.25), (x - size * 0.25, y + size * 0.25), (x - size * 0.25, y)))
-    polygon(screen, color,
-            ((x + size * 0.5, y + size * 0.5), (x + size * 0.25, y - size * 0.25), (x - size * 0.6, y - size * 0.5)))
+    '''
+    Функция рисует чайку, которая на английском звучит устрашающе
+    screen - передаеться поверхость, на которой рисуешь
+    color - основной цвет чайки
+    x, y - координаты правого верхнего примерно угла чайки на поверхности
+    size - некий характерный размер чайки в px
+    '''
+    Surface_for_gull = pygame.Surface((3 * size, 3 * size))
+    rect(Surface_for_gull, (0, 0, 1), (0, 0, 3 * size, 3 * size))
+    Surface_for_gull.set_colorkey((0, 0, 1))
+    ellipse(Surface_for_gull, color, (size, size, size, size / 2))
+    ellipse(Surface_for_gull, color, (size * 1.8, size * 1.1, size / 2, size / 4))
+    ellipse(Surface_for_gull, color, (size * 2, size, size / 2, size / 4))
+    ellipse(Surface_for_gull, BLACK, (size * 2.3, size * 1.04, size / 10, size / 20))
+    line(Surface_for_gull, YELLOW, (size * 2.5, size * 1.12), (size * 2.8, size * 1.12), int(size * 0.06))
+    line(Surface_for_gull, BLACK, (size * 2.5, size * 1.12), (size * 2.8, size * 1.12), int(size * 0.01))
+    polygon(Surface_for_gull, color,
+            ((size * 1.25, size * 1.25), (size * 0.75, size * 1.25), (size * 0.75, size)))
+    polygon(Surface_for_gull, color,
+            ((size * 1.5, size * 1.5), (size * 1.25, size * 0.75), (size * 0.4, size * 0.5)))
 
-    circle(screen, color, (x + size * 0.5, y + size * 0.5), size / 8)
-    circle(screen, color, (x + size * 0.5, y + size * 0.6), size / 8)
-    ellipse(screen, color, (x + size * 0.5, y + size * 0.5, size / 2, size / 8))
-    ellipse(screen, color, (x + size * 0.5, y + size * 0.6, size / 2, size / 8))
-    line(screen, YELLOW, (x + size, y + size * 0.55), (x + size * 1.2, y + size * 0.55), int(size * 0.03))
-    line(screen, YELLOW, (x + size, y + size * 0.67), (x + size * 1.2, y + size * 0.67), int(size * 0.03))
-    line(screen, YELLOW, (x + size, y + size * 0.55), (x + size * 1.2, y + size * 0.63), int(size * 0.03))
-    line(screen, YELLOW, (x + size, y + size * 0.67), (x + size * 1.2, y + size * 0.73), int(size * 0.03))
-    line(screen, YELLOW, (x + size, y + size * 0.55), (x + size * 1.2, y + size * 0.7), int(size * 0.03))
-    line(screen, YELLOW, (x + size, y + size * 0.67), (x + size * 1.2, y + size * 0.8), int(size * 0.03))
-    line(screen, YELLOW, (x + size, y + size * 0.55), (x + size, y + size * 0.65), int(size * 0.03))
-    line(screen, YELLOW, (x + size, y + size * 0.67), (x + size, y + size * 0.77), int(size * 0.03))
+    circle(Surface_for_gull, color, (size * 1.5, size * 1.5), size / 8)
+    circle(Surface_for_gull, color, (size * 1.5, size * 1.6), size / 8)
+    ellipse(Surface_for_gull, color, (size * 1.5, size * 1.5, size / 2, size / 8))
+    ellipse(Surface_for_gull, color, (size * 1.5, size * 1.6, size / 2, size / 8))
+    line(Surface_for_gull, YELLOW, (size * 2, size * 1.55), (size * 2.2, size * 1.55), int(size * 0.03))
+    line(Surface_for_gull, YELLOW, (size * 2, size * 1.67), (size * 2.2, size * 1.67), int(size * 0.03))
+    line(Surface_for_gull, YELLOW, (size * 2, size * 1.55), (size * 2.2, size * 1.63), int(size * 0.03))
+    line(Surface_for_gull, YELLOW, (size * 2, size * 1.67), (size * 2.2, size * 1.73), int(size * 0.03))
+    line(Surface_for_gull, YELLOW, (size * 2, size * 1.55), (size * 2.2, size * 1.7), int(size * 0.03))
+    line(Surface_for_gull, YELLOW, (size * 2, size * 1.67), (size * 2.2, size * 1.8), int(size * 0.03))
+    line(Surface_for_gull, YELLOW, (size * 2, size * 1.55), (size * 2, size * 1.65), int(size * 0.03))
+    line(Surface_for_gull, YELLOW, (size * 2, size * 1.67), (size * 2, size * 1.77), int(size * 0.03))
+    screen.blit(Surface_for_gull, (x - size, y - size))
 
 
 pygame.init()
